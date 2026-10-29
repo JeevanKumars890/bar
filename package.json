@@ -1,0 +1,22 @@
+{
+  "name": "kudkara-meetup-bar-management",
+  "version": "1.0.0",
+  "description": "Kudkara Meetup - Karnataka Local Bar & MRP Store Web Application with Brand, ML Selection, Live Pricing, Cart, Checkout & Digital Receipt Generator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "liquor-store",
+    "bar-management",
+    "rum",
+    "vodka",
+    "whisky",
+    "beer",
+    "wine",
+    "pos",
+    "receipt-generator"
+  ],
+  "author": "",
+  "license": "ISC"
+}

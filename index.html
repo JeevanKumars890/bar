@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KUDKARA MEETUP | Karnataka Local Bar & MRP Liquor Outlets</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Age & Compliance Notice -->
+  <aside class="top-notice-bar" aria-label="Legal Notice">
+    <span>🔞 21+ Age Verification Required</span>
+    <span>•</span>
+    <span>🥃 Karnataka Local Bars & MRP Rates (CL-2 / CL-9)</span>
+    <span>•</span>
+    <span>📜 State Excise License No. #KA-BLR-8921-EX</span>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-content">
+      <a href="#" class="brand-logo" id="logoLink">
+        <div class="logo-icon">🥃</div>
+        <div>
+          <div class="brand-name">KUDKARA MEETUP</div>
+          <div class="brand-tagline">Karnataka Local Bar & MRP Lounge</div>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <button class="btn-admin" id="openAdminBtn" title="Inventory Management">
+          <span>⚙️</span>
+          <span>Admin & Stock</span>
+        </button>
+
+        <button class="cart-btn" id="openCartBtn" aria-label="View Cart">
+          <span>🛒</span>
+          <span>Cart</span>
+          <span class="cart-badge" id="cartCountBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="container">
+    <section class="hero-section">
+      <div class="hero-badge">🟡🔴 Karnataka Local Bars & MRP Outlets • Genuine Rates</div>
+      <h1 class="hero-title">Karnataka Bars & MRP: <span>Brand, ML & Price</span></h1>
+      <p class="hero-subtitle">
+        Featuring iconic <strong>Karnataka local bar & MRP brands</strong> (McDowell's No. 1, Royal Challenge RC, Imperial Blue IB, Old Monk, Kingfisher Strong, Morpheus XO, Bagpiper, OC Blue, Amrut Single Malt) alongside <strong>Spicy Side Dishes</strong> (Masala Groundnut, Mango Pickle, Chips, Mixture) and <strong>Mixers & Glasses</strong> (Use & Throw Glasses ₹5–10, Soda, Water, Ice Cubes, Coke & Pepsi).
+      </p>
+    </section>
+
+    <!-- Controls Bar (Search, Category Pills, Filters) -->
+    <section class="controls-container" aria-label="Filter Liquors">
+      <div class="search-and-sort">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="search-input" 
+            placeholder="Search by Brand (e.g. Johnnie Walker, Old Monk, Absolut) or liquor name..."
+          >
+        </div>
+
+        <div class="filter-selects">
+          <select id="brandFilterSelect" class="custom-select" aria-label="Filter by Brand">
+            <option value="all">All Brands</option>
+          </select>
+
+          <select id="sortSelect" class="custom-select" aria-label="Sort By">
+            <option value="featured">Featured First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <nav class="category-pills" id="categoryPillsContainer" aria-label="Categories">
+        <!-- Rendered dynamically -->
+      </nav>
+    </section>
+
+    <!-- Catalog Status & Items Grid -->
+    <section>
+      <div class="catalog-header">
+        <div class="catalog-count" id="catalogCountText">
+          Showing <strong id="itemCount">0</strong> liquors
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       CART SLIDEOUT DRAWER
+       ========================================================================== -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="cart-header">
+      <div class="cart-title">
+        <span>🛒</span>
+        <span>Your Order Cart</span>
+      </div>
+      <button class="cart-close-btn" id="closeCartBtn" aria-label="Close Cart">&times;</button>
+    </div>
+
+    <!-- Cart items list -->
+    <div class="cart-items-list" id="cartItemsList">
+      <!-- Items dynamically populated -->
+    </div>
+
+    <!-- Cart summary & checkout footer -->
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-summary-row">
+        <span>Subtotal</span>
+        <span id="cartSubtotalText">₹0</span>
+      </div>
+      <div class="cart-summary-row">
+        <span>VAT / State Excise Duty (5%)</span>
+        <span id="cartTaxText">₹0</span>
+      </div>
+      <div class="cart-summary-row total-row">
+        <span>Total Payable</span>
+        <span id="cartTotalText">₹0</span>
+      </div>
+
+      <div class="cart-actions-row">
+        <button class="btn-checkout" id="checkoutBtn">
+          <span>🧾</span>
+          <span>Proceed to Checkout</span>
+        </button>
+        <button class="btn-whatsapp-order" id="whatsappOrderBtn">
+          <span>💬</span>
+          <span>Send Order via WhatsApp</span>
+        </button>
+        <button class="btn-clear-cart" id="clearCartBtn">Clear Cart</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       CHECKOUT MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="checkoutModalOverlay">
+    <div class="modal-dialog" style="max-width: 560px;">
+      <div class="modal-header">
+        <div class="modal-title">Complete Delivery & Order Details</div>
+        <button class="cart-close-btn" id="closeCheckoutModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="checkoutForm">
+          <!-- Customer Name -->
+          <div class="form-group">
+            <label class="form-label" for="customerName">
+              Customer Full Name <span class="badge-mandatory">*</span>
+            </label>
+            <input type="text" id="customerName" class="form-input" placeholder="e.g. Rahul Sharma" required>
+          </div>
+
+          <!-- Two Phone Numbers: Mandatory & Optional -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="customerPhonePrimary">
+                Primary Phone <span class="badge-mandatory">* (Mandatory)</span>
+              </label>
+              <input type="tel" id="customerPhonePrimary" class="form-input" placeholder="e.g. 9876543210" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="customerPhoneSecondary">
+                Alternate Phone <span class="badge-optional">(Optional)</span>
+              </label>
+              <input type="tel" id="customerPhoneSecondary" class="form-input" placeholder="e.g. 9123456789">
+            </div>
+          </div>
+
+          <!-- Service Type -->
+          <div class="form-group">
+            <label class="form-label" for="orderType">Order Service Type</label>
+            <select id="orderType" class="form-select">
+              <option value="Home Delivery" selected>Doorstep Home Delivery (Direct)</option>
+              <option value="Takeaway / Store Counter">Takeaway / Store Counter Pickup</option>
+              <option value="Bar Table Tab">Bar Table Tab (Dine-in Lounge)</option>
+            </select>
+          </div>
+
+          <!-- Delivery Address with Live Location button -->
+          <div class="form-group" id="deliveryAddressSection">
+            <div class="location-action-bar">
+              <label class="form-label" for="customerAddress" style="margin-bottom: 0;">
+                Delivery Address <span class="badge-mandatory">*</span>
+              </label>
+              <button type="button" class="btn-get-location" id="detectLocationBtn" title="Detect GPS coordinates">
+                <span>📍</span>
+                <span id="locationBtnText">Use My Live Location</span>
+              </button>
+            </div>
+
+            <!-- Live GPS Status Display Card -->
+            <div class="location-status-card" id="locationStatusCard">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span>🛰️</span>
+                <div>
+                  <strong>Live GPS Captured:</strong>
+                  <div id="locationCoordsText" style="font-size: 0.75rem; color: #a7f3d0;">12.9716° N, 77.5946° E</div>
+                </div>
+              </div>
+              <a href="#" id="locationMapLink" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a>
+            </div>
+
+            <textarea 
+              id="customerAddress" 
+              class="form-textarea" 
+              rows="2" 
+              placeholder="House / Flat No., Apartment / Building Name, Street & Locality (e.g. Flat 402, Sunshine Heights, 100ft Road)" 
+              required
+            ></textarea>
+          </div>
+
+          <!-- Landmark -->
+          <div class="form-group" id="landmarkGroup">
+            <label class="form-label" for="customerLandmark">
+              Landmark <span class="badge-mandatory">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="customerLandmark" 
+              class="form-input" 
+              placeholder="e.g. Opp. Ganesh Temple, Beside Apollo Pharmacy, Near Metro Station" 
+              required
+            >
+          </div>
+
+          <!-- Optional Table Note (Hidden unless Bar Tab selected) -->
+          <div class="form-group" id="tableTabGroup" style="display: none;">
+            <label class="form-label" for="tableTabNumber">Table Number / Lounge Tab</label>
+            <input type="text" id="tableTabNumber" class="form-input" placeholder="e.g. Table #5 / VIP Booth 2">
+          </div>
+
+          <!-- Payment Preference -->
+          <div class="form-group">
+            <label class="form-label">Payment Preference</label>
+            <div class="payment-options-grid">
+              <label class="payment-option-label active" data-method="UPI / QR">
+                <input type="radio" name="paymentMethod" value="UPI / QR" checked>
+                <span>📱</span>
+                <span>UPI / QR</span>
+              </label>
+              <label class="payment-option-label" data-method="Cash">
+                <input type="radio" name="paymentMethod" value="Cash on Delivery">
+                <span>💵</span>
+                <span>Cash on Delivery</span>
+              </label>
+              <label class="payment-option-label" data-method="Card">
+                <input type="radio" name="paymentMethod" value="Card / POS">
+                <span>💳</span>
+                <span>Card on Delivery</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Age Declaration Checkbox -->
+          <div class="form-group" style="margin-top: 14px;">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer;">
+              <input type="checkbox" id="ageDeclarationCheck" required checked>
+              <span>I confirm I am at least 21 years of age and legally authorized to receive liquor & beverage orders.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-checkout" style="margin-top: 20px;">
+            <span>✨</span>
+            <span>Confirm Order & Generate Delivery Bill</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       DIGITAL RECEIPT / BILL MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="receiptModal">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">Official Tax Invoice & Bill</div>
+        <button class="cart-close-btn" id="closeReceiptModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="receipt-paper" id="receiptPaper">
+          <div class="receipt-header">
+            <div class="receipt-shop-name">KUDKARA MEETUP LIQUORS & BAR</div>
+            <div class="receipt-shop-sub">Karnataka State Excise Licensed MRP & Local Bar</div>
+            <div class="receipt-shop-sub">GSTIN: 29AAAAA0000A1Z5 | Excise #KA-BLR-8921</div>
+          </div>
+
+          <div class="receipt-meta" id="receiptMeta">
+            <!-- Order ID, Date, Customer info inserted here -->
+          </div>
+
+          <table class="receipt-table">
+            <thead>
+              <tr>
+                <th>Item & ML</th>
+                <th class="num-col">Qty</th>
+                <th class="num-col">Rate</th>
+                <th class="num-col">Total</th>
+              </tr>
+            </thead>
+            <tbody id="receiptTableBody">
+              <!-- Item rows inserted dynamically -->
+            </tbody>
+          </table>
+
+          <div class="receipt-totals" id="receiptTotals">
+            <!-- Subtotal, Tax, and Grand Total -->
+          </div>
+
+          <div class="receipt-footer-text">
+            *** THANK YOU FOR VISITING KUDKARA MEETUP ***<br>
+            Please drink responsibly. Alcohol is injurious to health.<br>
+            Goods once sold cannot be returned or refunded.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-admin" id="printReceiptBtn">
+          <span>🖨️</span>
+          <span>Print Receipt / PDF</span>
+        </button>
+        <button class="btn-whatsapp-order" id="shareReceiptWhatsAppBtn" style="width: auto;">
+          <span>💬</span>
+          <span>Send via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       AGE VERIFICATION GATE MODAL (21+)
+       ========================================================================== -->
+  <div class="modal-overlay" id="ageGateModal">
+    <div class="modal-dialog age-gate-dialog">
+      <div class="modal-body" style="padding: 32px 24px;">
+        <div class="age-gate-badge">21+</div>
+        <h2 class="age-gate-title">Age Verification</h2>
+        <p class="age-gate-text">
+          You must be at least 21 years old to enter Kudkara Meetup. By entering, you agree to our terms of responsible drinking and Karnataka legal state excise age regulations.
+        </p>
+        <div class="age-btn-group">
+          <button class="btn-age-confirm" id="confirmAgeBtn">I am 21 or Older (Enter)</button>
+          <button class="btn-age-deny" id="denyAgeBtn">Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ADMIN & STOCK MANAGEMENT MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal-dialog" style="max-width: 640px;">
+      <div class="modal-header">
+        <div class="modal-title">⚙️ Stock & Product Management</div>
+        <button class="cart-close-btn" id="closeAdminModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px;">
+          Add a new liquor brand with custom ML bottle sizes and prices, or restore default liquor inventory.
+        </p>
+
+        <form id="newProductForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="newBrand">Brand Name *</label>
+              <input type="text" id="newBrand" class="form-input" placeholder="e.g. Jack Daniel's" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newName">Liquor Title / Sub-brand *</label>
+              <input type="text" id="newName" class="form-input" placeholder="e.g. Single Barrel Select" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="newCategory">Category *</label>
+              <select id="newCategory" class="form-select" required>
+                <option value="Rum">Rum</option>
+                <option value="Vodka">Vodka</option>
+                <option value="Hot">Hot / Whisky</option>
+                <option value="Beer">Beer</option>
+                <option value="Gin">Gin</option>
+                <option value="Wine">Wine</option>
+                <option value="Brandy">Brandy</option>
+                <option value="Side Dish">Side Dish / Bar Bites</option>
+                <option value="Mixers">Mixers & Essentials</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newAbv">Alcohol % (ABV)</label>
+              <input type="text" id="newAbv" class="form-input" placeholder="e.g. 40%">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="newOrigin">Country / Region of Origin</label>
+            <input type="text" id="newOrigin" class="form-input" placeholder="e.g. Scotland / India">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">ML Volume Sizes & Prices (₹) *</label>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Small (e.g. 180ml / Pint 330ml)</span>
+                <div style="display: flex; gap: 6px;">
+                  <input type="number" id="v1_ml" class="form-input" placeholder="ML (e.g. 180)" value="180">
+                  <input type="number" id="v1_price" class="form-input" placeholder="Price ₹" required>
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Medium (e.g. 375ml / 500ml)</span>
+                <div style="display: flex; gap: 6px;">
+                  <input type="number" id="v2_ml" class="form-input" placeholder="ML (e.g. 375)" value="375">
+                  <input type="number" id="v2_price" class="form-input" placeholder="Price ₹">
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Standard Bottle (e.g. 750ml / 650ml)</span>
+                <div style="display: flex; gap: 6px;">
+                  <input type="number" id="v3_ml" class="form-input" placeholder="ML (e.g. 750)" value="750">
+                  <input type="number" id="v3_price" class="form-input" placeholder="Price ₹" required>
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Large / 1 Liter (Optional)</span>
+                <div style="display: flex; gap: 6px;">
+                  <input type="number" id="v4_ml" class="form-input" placeholder="ML (e.g. 1000)" value="1000">
+                  <input type="number" id="v4_price" class="form-input" placeholder="Price ₹">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="newDesc">Description & Tasting Notes</label>
+            <input type="text" id="newDesc" class="form-input" placeholder="Aroma, cask finish, flavor profile...">
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 20px;">
+            <button type="submit" class="btn-checkout" style="flex: 2;">
+              <span>➕</span>
+              <span>Add Liquor to Inventory</span>
+            </button>
+            <button type="button" class="btn-clear-cart" id="resetCatalogBtn" style="flex: 1;">
+              Reset to Defaults
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
